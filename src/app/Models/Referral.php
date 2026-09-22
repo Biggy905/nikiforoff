@@ -6,7 +6,19 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $referrer_master_id
+ * @property int $referred_master_id
+ * @property int $status
+ * @property string $created_at
+ *
+ * @property Master $referrerMaster
+ * @property Master $referredMaster
+ * @property array<ReferralEarning> $earnings
+ */
 class Referral extends Model
 {
     use HasFactory;
@@ -31,6 +43,11 @@ class Referral extends Model
     public function referredMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referred_master_id');
+    }
+
+    public function earnings(): HasMany
+    {
+        return $this->hasMany(ReferralEarning::class);
     }
 
     public function scopeActive(Builder $query): Builder

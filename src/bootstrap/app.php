@@ -19,4 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
+        $exceptions->shouldRenderJsonWhen(
+            function () {
+                return true;
+            }
+        );
     })->create();
